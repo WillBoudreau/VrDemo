@@ -45,4 +45,12 @@ public class TargetBehaviour : MonoBehaviour
         // Rotate the target towards the player
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ball"))
+        {
+            Debug.Log("Ball Hit Target");
+            Destroy(this.gameObject);
+        }
+    }
 }
