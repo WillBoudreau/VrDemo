@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 33953939693949920}
   - component: {fileID: 23918865209778262}
   - component: {fileID: 95612955934908496}
-  - component: {fileID: 5445069259863063693}
-  - component: {fileID: 1032391784742467688}
+  - component: {fileID: 2382228747900800120}
+  - component: {fileID: 1613599753150074910}
   m_Layer: 0
   m_Name: ChickenBrown
-  m_TagString: Ball
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!64 &5445069259863063693
+--- !u!64 &2382228747900800120
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,7 +129,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 7bad4e7c89be10a4083226108ffcab9d, type: 3}
---- !u!54 &1032391784742467688
+--- !u!54 &1613599753150074910
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
