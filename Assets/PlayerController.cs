@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Settings")]
-    [SerializeField] private float playerHealth = 100; // The health of the player
+    public float playerHealth = 50; // The health of the player
     public float playerDamage = 10; // The damage of the player
     [Header("Class calls")]
     [SerializeField] private UIManager uiManager; // The UI manager
@@ -13,6 +15,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        SetHealthBar();
+    }
+    void SetHealthBar()
+    {
+        uiManager.healthBar.maxValue = playerHealth;
+        uiManager.healthBar.value = playerHealth;
     }
     /// <summary>
     /// Take damage
@@ -23,6 +31,7 @@ public class PlayerController : MonoBehaviour
         playerHealth -= damage;
         uiManager.SetUI("DamageUI");
         Debug.Log("Player health: " + playerHealth);
+        UpdateHealthBar();
 
         // Check if the player is dead
         if (playerHealth <= 0)
@@ -37,6 +46,13 @@ public class PlayerController : MonoBehaviour
     void KillPlayer()
     {
         uiManager.SetUI("GameOverUI");
+    }
+    /// <summary>
+    /// Update the health bar based on the player health
+    /// </summary>
+    void UpdateHealthBar()
+    {
+        uiManager.healthBar.value = playerHealth;
     }
 
     void OnTriggerEnter(Collider other)

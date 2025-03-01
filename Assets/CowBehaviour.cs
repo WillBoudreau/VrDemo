@@ -6,7 +6,7 @@ public class CowBehaviour : MonoBehaviour
 {
     [Header("Evil Chicken Settings Settings")]
     [SerializeField] private GameObject player; // The player object
-    [SerializeField] private float health = 100; // The health of the cow
+    public float health = 100; // The health of the cow
     public float damage = 10; // The damage of the cow
     [SerializeField] private bool canTakeDamage; // Can the cow take damage
     [Header("Class calls")]
