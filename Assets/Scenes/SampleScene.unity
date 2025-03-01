@@ -6111,6 +6111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   health: 100
+  damage: 10
   canTakeDamage: 0
   targetManager: {fileID: 673362298}
   eggSpawnPoints:
@@ -12003,7 +12004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7815747393741293731, guid: 916d10473af46f848a8de8ce2b272702, type: 3}
       propertyPath: m_MovementType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7878719718576441472, guid: 916d10473af46f848a8de8ce2b272702, type: 3}
       propertyPath: m_Layer
@@ -14844,7 +14845,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.9258944e+29, y: 0, z: 1.7642e-41, w: NaN}
+  m_BoundingSphereOverride: {x: 7.78e-43, y: 1.36e-43, z: -0.0000009984193, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0

@@ -12,13 +12,13 @@ public class BlasterBehaviour : MonoBehaviour
     [SerializeField] private int maxEggs = 5; // Maximum number of eggs that can be fired before cooldown
     [SerializeField] private int currentEggs = 0; // Current number of eggs fired
     [SerializeField] private Material[] eggMaterials; // List of egg materials
-    [SerializeField] private Material blasterMaterial; // The material of the blaster
+    [SerializeField] private MeshRenderer blasterMesh; // The MeshRenderer of the blaster
     [SerializeField] private bool canFire = true;
-    [SerializeField] private GameObject startPoint;
+    private bool isCoolingDown = false;
 
     void Start()
     {
-        blasterMaterial = GetComponent<Renderer>().material;
+        blasterMesh = GetComponent<MeshRenderer>();
     }
     void Update()
     {
@@ -29,7 +29,6 @@ public class BlasterBehaviour : MonoBehaviour
         }
     }
     /// <summary>
-    /// Fire the blaster
     /// </summary>
     /// <returns></returns>
     public void Fire()
@@ -44,10 +43,12 @@ public class BlasterBehaviour : MonoBehaviour
     }
     IEnumerator Cooldown()
     {
-        blasterMaterial.color = Color.red;
+        Debug.Log("Cooldown");
+        blasterMesh.material.color = Color.red;
         yield return new WaitForSeconds(fireRate);
         currentEggs = 0;
-        blasterMaterial.color = Color.white;
+        canFire = true;
+        blasterMesh.material.color = Color.white;
     }
     void OnDrawGizmos()
     {

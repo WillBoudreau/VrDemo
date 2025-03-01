@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5921034074701904714, guid: ecbf6d1d3a7091b4bbdbc934b3c89fb9, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5921034074701904714, guid: ecbf6d1d3a7091b4bbdbc934b3c89fb9, type: 3}
       propertyPath: m_Constraints
@@ -325,9 +325,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e9b12db2bcec4f044896bc56c67621f4, type: 2}
   - {fileID: 2100000, guid: 4d75c0d04baf6e8418f3aa0d90c42a54, type: 2}
   - {fileID: 2100000, guid: 166f5886144206a4e8408f77bc27f89c, type: 2}
-  blasterMaterial: {fileID: 0}
+  blasterMesh: {fileID: 0}
   canFire: 1
-  startPoint: {fileID: 0}
 --- !u!114 &3314082409841491127
 MonoBehaviour:
   m_ObjectHideFlags: 0
