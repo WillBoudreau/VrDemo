@@ -6,6 +6,7 @@ public class TargetBehaviour : MonoBehaviour
 {
     [Header("Target Settings")]
     [SerializeField] private GameObject player; // The player object
+    [SerializeField] private CowBehaviour cowBehaviour; // The cow behaviour
     [Header("Target Rotation Settings")]
     [SerializeField] private float rotationSpeed = 1.0f; // Rotation speed multiplier
     [SerializeField] private float zRotation = 0; // Z rotation of the target
@@ -20,11 +21,15 @@ public class TargetBehaviour : MonoBehaviour
     [SerializeField] private float colliderScale = 1; // The scale of the collider
     [SerializeField] private Vector3 colliderOffset; // The offset of the collider
     [SerializeField] private Vector3 colliderSize; // The size of the collider
+    [Header("Target Damage Settings")]
+    [SerializeField] private float minDamage = 1; // The damage of the target
+    [SerializeField] private float maxDamage = 10; // The damage of the target
 
     void Start()
     {
         FindPlayer();
         SetTargetModel();
+        cowBehaviour = GameObject.FindGameObjectWithTag("Boss").GetComponent<CowBehaviour>();
     }
     void Update()
     {
@@ -122,7 +127,15 @@ public class TargetBehaviour : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             Debug.Log("Ball Hit Target");
+            cowBehaviour.TakeDamage(player.GetComponent<PlayerController>().playerDamage);
             Destroy(this.gameObject);
         }
+    }
+    /// <summary>
+    /// Get the damage of the target
+    /// </summary>
+    public float GetDamage()
+    {
+        return Random.Range(minDamage, maxDamage);
     }
 }

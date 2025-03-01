@@ -14,6 +14,7 @@ public class BlasterBehaviour : MonoBehaviour
     [SerializeField] private Material[] eggMaterials; // List of egg materials
     [SerializeField] private Material blasterMaterial; // The material of the blaster
     [SerializeField] private bool canFire = true;
+    [SerializeField] private GameObject startPoint;
 
     void Start()
     {

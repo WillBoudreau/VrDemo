@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Game Manager Settings")]
-    [Header("Game Objects")]
-    [SerializeField] private GameObject[] ballPrefabs; // List of ball prefabs to spawn
-    [SerializeField] private Transform[] ballSpawnPoints; // List of spawn points for the balls
-    [Header("Game Variables")]
-    [SerializeField] private float spawnTime = 5; // Time between ball spawns
-    [SerializeField] private int maxBalls = 5; // Maximum number of balls that can be spawned
+    [Header("Game Settings")]
+    [SerializeField] private GameObject player; // The player object
+    [SerializeField] private static GameManager instance; // The instance of the game manager
+    [SerializeField] private UIManager uiManager; // The UI manager
 
-
-    void Update()
+    void Start()
     {
-        //SpawnBall();
-        //CheckTargetSpawnPoints();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 }

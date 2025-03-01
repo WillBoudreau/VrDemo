@@ -4,94 +4,112 @@ using UnityEngine;
 
 public class CowBehaviour : MonoBehaviour
 {
-    [Header("Cow Settings")]
+    [Header("Evil Chicken Settings Settings")]
     [SerializeField] private GameObject player; // The player object
-    [SerializeField] private int maxTargets = 5; // Maximum number of targets that can be spawned
-    [SerializeField] private GameObject[] targetPrefabs; // List of target prefabs to spawn
-    [SerializeField] private Transform[] targetSpawnPoints; // List of spawn points for the targets
+    [SerializeField] private float health = 100; // The health of the cow
+    [SerializeField] private bool canTakeDamage; // Can the cow take damage
+    [Header("Class calls")]
+    [SerializeField] private TargetManager targetManager; // The target manager
+    [Header("Egg Settings")]
+    [SerializeField] private Transform[] eggSpawnPoints; // List of spawn points for the eggs
+    [SerializeField] private float eggSpeed = 1000; // The speed of the eggs
+    [SerializeField] private GameObject eggPrefab; // The egg prefab
+    [SerializeField] private float eggFireRate; // The rate at which the cow fires eggs
+    [SerializeField] private Vector3 eggScale = new Vector3(2,2,2); // The scale of the eggs
+    private float starteggFireRate;
 
-    [Header("Cow Rotation Settings")]
+    [Header("Evil Chicken Rotation Settings")]
     [SerializeField] private float rotationSpeed = 1.0f; // Rotation speed multiplier
     [SerializeField] private float zRotation = 90; // Z rotation of the cow 
     [SerializeField] private float yRotation = 0; // Y rotation of the cow
     [SerializeField] private float xRotation = 0; // X rotation of the cow
-
-    private List<Transform> usedTargetSpawnPoints = new List<Transform>();
-    private List<Transform> availableSpawnPoints = new List<Transform>();
-
-
     void Start()
     {
+        starteggFireRate = eggFireRate;
         player = GameObject.FindGameObjectWithTag("Player");
-        // Add all target spawn points to the available spawn points list
-        foreach(Transform spawnPoint in targetSpawnPoints)
-        {
-            availableSpawnPoints.Add(spawnPoint);
-        }
     }
     void Update()
     {
-        CheckTargetSpawnPoints();
+        EggCooldown();
     }
+   
     /// <summary>
-    /// Spawn a target at the given position
+    /// Take Damage
     /// </summary>
-    void SpawnTarget()
+    
+    public void TakeDamage(float damage)
     {
-        if(GameObject.FindGameObjectsWithTag("Target").Length >= maxTargets)
+        health -= damage;
+        StartCoroutine(FlickerRed());
+        if(health <= 0)
         {
-            return;
-        }
-
-        // Get a random target prefab
-        GameObject targetPrefab = targetPrefabs[Random.Range(0, targetPrefabs.Length)];
-
-        // Get a random spawn point that is not used
-        Transform spawnPoint = GetUnusedSpawnPoint();
-
-        if (spawnPoint != null)
-        {
-
-            // Spawn the target at the spawn point
-            Instantiate(targetPrefab, spawnPoint.position, Quaternion.identity);
-            usedTargetSpawnPoints.Add(spawnPoint);
-            availableSpawnPoints.Remove(spawnPoint);
-
-        }
-        else
-        {
-            Debug.Log("No available spawn points");
+            Die();
         }
     }
-
-    /// <summary>
-    /// Check if target spawn points are empty
-    /// </summary>
-    void CheckTargetSpawnPoints()
+    ///<summary>
+    /// Flicker red when hit
+    ///</summary>
+    IEnumerator FlickerRed()
     {
-        if (GameObject.FindGameObjectsWithTag("Target").Length <= maxTargets)
+        GetComponent<MeshRenderer>().material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<MeshRenderer>().material.color = Color.white;
+    }
+    /// <summary>
+    /// Boss dies
+    /// </summary>
+    void Die()
+    {
+        Destroy(this.gameObject);
+    }
+    
+    /// <summary>
+    /// Fire Eggs Back at Player
+    /// </summary>
+    public void FireEgg()
+    {
+        // Get a random spawn point
+        Transform spawnPoint = eggSpawnPoints[Random.Range(0, eggSpawnPoints.Length)];
+        GameObject egg = Instantiate(eggPrefab, spawnPoint.position, Quaternion.identity);
+        Vector3 direction = (player.transform.position - spawnPoint.position).normalized;
+        egg.GetComponent<Rigidbody>().AddForce(direction * eggSpeed);
+        egg.transform.localScale = eggScale;
+    }
+    /// <summary>
+    /// Fire Egg after cooldown
+    /// </summary>
+    void EggCooldown()
+    {
+        eggFireRate -= Time.deltaTime;
+        if(eggFireRate <= 0)
         {
-            foreach(Transform spawnPoint in targetSpawnPoints)
-            {
-                if(!usedTargetSpawnPoints.Contains(spawnPoint))
-                {
-                    SpawnTarget();
-                }
-            }
+            eggFireRate = starteggFireRate;
+            FireEgg();
         }
     }
-
     /// <summary>
-    /// Get an unused spawn point
+    /// Rotate the chicken towards the player
     /// </summary>
-    Transform GetUnusedSpawnPoint()
+    void RotateTowardsPlayer()
     {
-        Debug.Log("Getting Unused Spawn Point");
-        if (availableSpawnPoints.Count > 0)
+        // Get the direction to the player
+        Vector3 direction = player.transform.position - transform.position;
+
+        // Get the rotation to look at the player
+        Quaternion rotation = Quaternion.LookRotation(direction);
+
+        // Adjust the rotation to be a perfect 
+        rotation *= Quaternion.Euler(xRotation, yRotation, zRotation);
+
+        // Rotate the target towards the player
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        foreach(Transform spawnPoint in eggSpawnPoints)
         {
-            Debug.Log("Available Spawn Points");
-            return availableSpawnPoints[Random.Range(0, availableSpawnPoints.Count)];
+            Gizmos.DrawWireSphere(spawnPoint.position, 1);
         }
-        return null;
     }
 }

@@ -10,16 +10,22 @@ public class ChickenMove : MonoBehaviour
     [SerializeField] private float rotationSpeed = 1.0f; // Rotation speed multiplier
     [SerializeField] private NavMeshAgent agent; // The NavMeshAgent component
     [SerializeField] private float determineTargetRadius = 10; // The radius to determine the target
+    [SerializeField] private bool isGrabbed = false; // Is the chicken grabbed
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
     }
+
     void Update()
     {
-        Move();
+        if(!isGrabbed)
+        {
+            Move();
+        }
     } 
+
     /// <summary>
     /// Move the chicken
     /// </summary>
@@ -42,7 +48,6 @@ public class ChickenMove : MonoBehaviour
     /// <summary>
     /// Get a random position within the radius
     /// </summary>
-    /// 
     Vector3 GetRandomPosition()
     {
         Vector3 randomDirection = Random.insideUnitSphere * determineTargetRadius;
@@ -50,5 +55,23 @@ public class ChickenMove : MonoBehaviour
         NavMeshHit hit;
         NavMesh.SamplePosition(randomDirection, out hit, determineTargetRadius, 1);
         return hit.position;
+    }
+
+    /// <summary>
+    /// Called when the chicken is grabbed
+    /// </summary>
+    public void OnGrab()
+    {
+        isGrabbed = true;
+        agent.isStopped = true;
+    }
+
+    /// <summary>
+    /// Called when the chicken is released
+    /// </summary>
+    public void OnRelease()
+    {
+        isGrabbed = false;
+        agent.isStopped = false;
     }
 }
