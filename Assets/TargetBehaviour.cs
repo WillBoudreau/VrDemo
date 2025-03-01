@@ -6,7 +6,6 @@ public class TargetBehaviour : MonoBehaviour
 {
     [Header("Target Settings")]
     [SerializeField] private GameObject player; // The player object
-    [SerializeField] private CowBehaviour cowBehaviour; // The cow behaviour
     [Header("Target Rotation Settings")]
     [SerializeField] private float rotationSpeed = 1.0f; // Rotation speed multiplier
     [SerializeField] private float zRotation = 0; // Z rotation of the target
@@ -30,7 +29,6 @@ public class TargetBehaviour : MonoBehaviour
     {
         FindPlayer();
         SetTargetModel();
-        cowBehaviour = GameObject.FindGameObjectWithTag("Boss").GetComponent<CowBehaviour>();
     }
     void Update()
     {
@@ -134,7 +132,6 @@ public class TargetBehaviour : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             Debug.Log("Ball Hit Target");
-            cowBehaviour.TakeDamage(player.GetComponent<PlayerController>().playerDamage);
             Destroy(this.gameObject);
         }
     }

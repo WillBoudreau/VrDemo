@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject DamageUI; // The damage UI
     [SerializeField] private GameObject GameOverUI; // The game over UI
     [SerializeField] private GameObject GameWinUI; // The game win UI
+    public TextMeshProUGUI timerText; // The timer text 
     public Slider healthBar; // The health bar of the player
 
 

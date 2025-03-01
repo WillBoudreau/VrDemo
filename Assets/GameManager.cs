@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         CheckPlayerHealth();
-        CheckBossHealth();
     }
     public void QuitGame()
     {
@@ -41,16 +40,6 @@ public class GameManager : MonoBehaviour
         if (player.playerHealth <= 0)
         {
             uiManager.SetUI("GameOverUI");
-        }
-    }
-    /// <summary>
-    /// Check health of the boss
-    /// </summary>
-    public void CheckBossHealth()
-    {
-        if (boss.health <= 0)
-        {
-            uiManager.SetUI("GameWinUI");
         }
     }
 }
