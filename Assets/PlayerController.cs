@@ -14,11 +14,6 @@ public class PlayerController : MonoBehaviour
     {
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
     }
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Take damage
     /// </summary>
@@ -60,6 +55,23 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Debug.LogError("boss is null");
+            }
+        }
+        else if (other.tag == "Target")
+        {
+            Debug.Log("Hit by target");
+            // Take damage from the target
+            TargetBehaviour target = other.GetComponent<TargetBehaviour>();
+            // Check if the target is not null
+            if (target != null)
+            {
+                // Take damage from the target
+                TakeDamage(target.GetDamage());
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                Debug.LogError("target is null");
             }
         }
     }

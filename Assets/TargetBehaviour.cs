@@ -24,6 +24,7 @@ public class TargetBehaviour : MonoBehaviour
     [Header("Target Damage Settings")]
     [SerializeField] private float minDamage = 1; // The damage of the target
     [SerializeField] private float maxDamage = 10; // The damage of the target
+    [SerializeField] private float targetSpeed = 1; // The speed of the target
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class TargetBehaviour : MonoBehaviour
     void Update()
     {
         RotateTowardsPlayer();
+        FlyatPlayer();
     }
 
     /// <summary>
@@ -121,6 +123,11 @@ public class TargetBehaviour : MonoBehaviour
         BoxCollider boxCollider = GetComponent<BoxCollider>();
         boxCollider.size = colliderSize;
         boxCollider.center = colliderOffset;
+    }
+    void FlyatPlayer()
+    {
+        Vector3 direction = player.transform.position - transform.position;
+        transform.position += direction.normalized * targetSpeed * Time.deltaTime;
     }
     void OnTriggerEnter(Collider other)
     {

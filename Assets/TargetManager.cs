@@ -9,7 +9,7 @@ public class TargetManager : MonoBehaviour
     [SerializeField] private GameObject[] targetPrefabs; // List of target prefabs to spawn
     [SerializeField] private Transform[] targetSpawnPoints; // List of spawn points for the targets
     [SerializeField] private float targetSpawnRate = 1.0f; // The rate at which the cow spawns targets
-    
+
     private List<Transform> usedTargetSpawnPoints = new List<Transform>();
     private List<Transform> availableSpawnPoints = new List<Transform>();
 
@@ -23,6 +23,7 @@ public class TargetManager : MonoBehaviour
     }
     void Update()
     {
+        // Check if the target spawn points are empty
         CheckTargetSpawnPoints();
     }
     /// <summary>
@@ -61,15 +62,27 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     void CheckTargetSpawnPoints()
     {
-        if (GameObject.FindGameObjectsWithTag("Target").Length <= maxTargets)
+        if (GameObject.FindGameObjectsWithTag("Target").Length == 0)
         {
-            foreach(Transform spawnPoint in targetSpawnPoints)
-            {
-                if(!usedTargetSpawnPoints.Contains(spawnPoint))
-                {
-                    TrackTargets();
-                }
-            }
+            RespawnTargets();
+        }
+    }
+    /// <summary>
+    /// Respawn the targets when they are all destroyed
+    /// </summary>
+    public void RespawnTargets()
+    {
+        usedTargetSpawnPoints.Clear();
+        availableSpawnPoints.Clear();
+
+        foreach(Transform spawnPoint in targetSpawnPoints)
+        {
+            availableSpawnPoints.Add(spawnPoint);
+        }
+
+        for (int i = 0; i < maxTargets; i++)
+        {
+            SpawnTarget();
         }
     }
 
