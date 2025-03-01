@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         // Subtract the damage from the player health
         playerHealth -= damage;
         uiManager.SetUI("DamageUI");
+        Debug.Log("Player health: " + playerHealth);
 
         // Check if the player is dead
         if (playerHealth <= 0)
@@ -45,16 +46,20 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Boss Egg")
+        if (other.tag == "BossEgg")
         {
-            // Get the target behaviour
-            TargetBehaviour target = other.GetComponent<TargetBehaviour>();
-
-            // Check if the target is not null
-            if (target != null)
+            Debug.Log("Hit by boss egg");
+            //Take damage from the boss
+            CowBehaviour boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<CowBehaviour>();
+            // Check if the boss is not null
+            if (boss != null)
             {
-                // Take damage
-                TakeDamage(target.GetDamage());
+                // Take damage from the boss
+                TakeDamage(boss.damage);
+            }
+            else
+            {
+                Debug.LogError("boss is null");
             }
         }
     }

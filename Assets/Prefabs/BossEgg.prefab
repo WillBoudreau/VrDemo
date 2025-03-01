@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8320716150720499490}
   - component: {fileID: 2735171658947094747}
   - component: {fileID: 6951701733083807959}
+  - component: {fileID: 1760800347993019809}
   m_Layer: 0
   m_Name: BossEgg
   m_TagString: BossEgg
@@ -270,3 +271,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 5
+--- !u!135 &1760800347993019809
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2314193482046732285}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5767503
+  m_Center: {x: -0.029283762, y: 0, z: 0}
