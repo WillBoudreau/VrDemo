@@ -137,8 +137,8 @@ public class TargetBehaviour : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             Debug.Log("Ball Hit Target");
-            player.GetComponent<PlayerController>().UpdateKillCount(killScore);
             Destroy(this.gameObject);
+            player.GetComponent<PlayerController>().UpdateKillCount(killScore);
         }
     }
     /// <summary>
