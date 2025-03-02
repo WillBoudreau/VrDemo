@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Player Settings")]
     public float playerHealth = 50; // The health of the player
     public float playerDamage = 10; // The damage of the player
+    public int killCount = 0; // The kill count of the player
     [Header("Class calls")]
     [SerializeField] private UIManager uiManager; // The UI manager
 
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     {
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
         SetHealthBar();
+        UpdateKillCount(0);
     }
     void SetHealthBar()
     {
@@ -53,6 +55,14 @@ public class PlayerController : MonoBehaviour
     void UpdateHealthBar()
     {
         uiManager.healthBar.value = playerHealth;
+    }
+    /// <summary>
+    /// Update the kill count
+    /// </summary>
+    public void UpdateKillCount(int killcount)
+    {
+        killCount += killcount;
+        uiManager.killCountText.text = "Kill Count: " + killCount;
     }
 
     void OnTriggerEnter(Collider other)

@@ -6,6 +6,7 @@ public class TargetBehaviour : MonoBehaviour
 {
     [Header("Target Settings")]
     [SerializeField] private GameObject player; // The player object
+    [SerializeField] private int killScore = 1; // The score for killing the target
     [Header("Target Rotation Settings")]
     [SerializeField] private float rotationSpeed = 1.0f; // Rotation speed multiplier
     [SerializeField] private float zRotation = 0; // Z rotation of the target
@@ -124,6 +125,10 @@ public class TargetBehaviour : MonoBehaviour
     }
     void FlyatPlayer()
     {
+        if (player == null)
+        {
+            return;
+        }
         Vector3 direction = player.transform.position - transform.position;
         transform.position += direction.normalized * targetSpeed * Time.deltaTime;
     }
@@ -132,6 +137,7 @@ public class TargetBehaviour : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             Debug.Log("Ball Hit Target");
+            player.GetComponent<PlayerController>().UpdateKillCount(killScore);
             Destroy(this.gameObject);
         }
     }
